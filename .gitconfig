@@ -1,0 +1,91 @@
+[user]
+    name = Kasper Jacobsen
+    email = k@mackwerk.dk
+
+[color]
+    branch = always
+    diff = always
+    grep = always
+    interactive = always
+    pager = true
+    showbranch = always
+    status = always
+    ui = always
+
+[apply]
+    whitespace = fix
+
+[branch]
+    autosetupmerge =  true
+    #autosetuprebase = always
+
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+    tool = sublime
+
+[mergetool "sublime"]
+    cmd = subl -w $MERGED
+    trustExitCode = false
+
+# Use `origin` as the default remote on the `master` branch in all cases
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+
+[push]
+    default = tracking
+
+[fetch]
+    recurseSubmodules = true
+
+[log]
+    decorate = short
+
+[pretty]
+    custom = %C(yellow)%h%Creset -%C(green)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset
+
+[alias]
+    dc = diff --cached
+    df = diff --word-diff
+    co = checkout
+    cp = cherry-pick
+    st = status
+    br = branch -a
+    lg = log --graph --pretty=medium --abbrev-commit --date=local
+    lgb = log --graph --pretty=medium --abbrev-commit --date=local --branches --all
+    lol = log --graph --oneline
+    lola = log --graph --oneline --all
+    l = log --graph --pretty=custom
+    la = log --graph --pretty=custom --all
+
+    # Show files ignored by git:
+    ign = ls-files -o -i --exclude-standard
+
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+
+    onto = !"git co -b __ONTOTMP; git co $1; git merge __ONTOTMP; git branch -d __ONTOTMP"
+	today = log --since=midnight --author='Kasper Jacobsen' --oneline
+    
+    # exclude files locally
+    exclude = !sh -c 'echo "$1" >> .git/info/exclude' -
+
+
+# URL shorthands
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+    insteadOf = "github:"
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"
+[credential]
+    helper = cache

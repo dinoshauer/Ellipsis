@@ -1,0 +1,8 @@
+#!/bin/bash
+# http://www.reddit.com/r/archlinux/comments/2b0sbs/whats_the_best_way_to_log_out_of_an_xorg_session/cj0x87j
+
+for window_id in $(bspc query -W); do
+  bspc window $window_id -c
+done
+
+bspc quit

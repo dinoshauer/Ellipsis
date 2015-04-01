@@ -1,0 +1,24 @@
+{
+	"color_scheme": "Packages/Colorsublime - Themes/Monokai-Spacegray.tmTheme",
+	"enable_tab_scrolling": true,
+	"ensure_newline_at_eof_on_save": true,
+	"font_face": "Oxygen Mono",
+	"font_size": 11,
+	"highlight_line": true,
+	"hot_exit": false,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"remember_open_files": false,
+	"rulers":
+	[
+		79
+	],
+	"spacegray_sidebar_font_xlarge": true,
+	"spacegray_sidebar_tree_large": true,
+	"spacegray_tabs_font_large": true,
+	"spacegray_tabs_xlarge": true,
+	"theme": "Spacegray.sublime-theme",
+	"translate_tabs_to_spaces": true
+}
