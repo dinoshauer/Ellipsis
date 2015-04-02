@@ -8,9 +8,9 @@ num_mon=$(bspc query -M | wc -l)
 
 while read -r line ; do
     case $line in
-        S*)
+        C*)
             # clock output
-            sys_infos="%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG} ${line#?} %{B-}%{F-}"
+            clock="%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG} ${line#?} %{B-}%{F-}"
             ;;
         T*)
             # xtitle output
@@ -70,5 +70,5 @@ while read -r line ; do
             done
             ;;
     esac
-    printf "%s\n" "%{l}${wm_infos}%{c}${title}%{r}${sys_infos}"
+    printf "%s\n" "%{l}${wm_infos}%{c}${title}%{r}${clock}"
 done
