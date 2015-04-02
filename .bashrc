@@ -133,15 +133,6 @@ export PYTHONDONTWRITEBYTECODE=true
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# bspwm specific scripts
-export PATH="/home/k/.config/bspwm/scripts/:$PATH"
-
-# The bar!
-# https://github.com/baskerville/bspwm
-# Export panel scripts
-# export PATH="/home/k/.config/lemonbar/:$PATH"
-
-
 # Docker aliases
 alias docker_rmc='docker rm $(docker ps -a -q)'
 alias docker_rmi='docker rmi $(docker images -q)'
@@ -150,4 +141,8 @@ alias subl='subl3'
 
 alias npm='PYTHON=python2 npm'
 
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+# Keychain ssh-agent stuff
+eval $(keychain --agents ssh --eval 2> /dev/null)
+
+# ls colors in termite
+eval $(dircolors ~/.dircolors)
