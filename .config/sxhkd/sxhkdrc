@@ -2,8 +2,13 @@
 # bspwm hotkeys
 #
 
+# Kill bspwm softly
 super + alt + Escape
-    bspc quit
+    for window_id in $(bspc query -W); do \
+        bspc window $window_id -c; \
+    done \
+    && pkill panel \
+    && bspc quit
 
 super + w
     bspc window -c
