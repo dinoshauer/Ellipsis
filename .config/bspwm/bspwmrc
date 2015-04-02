@@ -10,14 +10,11 @@
 # NMON=$i
 # unset i
 
-bspc monitor -d misc web dev 1 2 3 4
+bspc config border_width            20
+bspc config window_gap              30
 
-# bspc config border_width            20
-# bspc config window_gap              30
-
-bspc config focus_follows_pointer   true
-
-# bspc config split_ratio         0.52
+bspc config focus_follows_pointer   false
+bspc config split_ratio             0.40
 # bspc config borderless_monocle  true
 # bspc config gapless_monocle     true
 # bspc config focus_by_distance   true
@@ -28,6 +25,8 @@ bspc config focus_follows_pointer   true
 # bspc rule -a mplayer2 floating=on
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
+
+bspc monitor -d misc web dev 1 2 3 4
 
 setxkbmap dk
 source /home/k/.profile && panel &
