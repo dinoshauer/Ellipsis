@@ -10,7 +10,7 @@
 # NMON=$i
 # unset i
 
-bspc monitor -d I II
+bspc monitor -d misc web dev 1 2 3 4
 
 # bspc config border_width            20
 # bspc config window_gap              30
