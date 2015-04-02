@@ -23,11 +23,6 @@ super + {grave,Tab}
 super + apostrophe
     bspc window -s last
 
-super + {o,i}
-    bspc control --record-history off; \
-    bspc window {older,newer} -f; \
-    bspc control --record-history on
-
 super + y
     bspc window -w last.manual
 
@@ -64,12 +59,19 @@ super + ctrl + {1-9}
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,window -d} ^{1-9,10}
 
+# Change desktop by #id
 ctrl + alt + {1-9,0}
     bspc desktop -f ^{1-9,10}
 
+# Change desktop
+ctrl + alt + {Left,Right}
+    bspc desktop -f {prev,next}
+
+# Focus a window by clicking it with the left mouse button, genius...
 ~button1
     bspc pointer -g focus
 
+# Resize windows
 ctrl + alt + button{1-3}
     bspc pointer -g {move,resize_side,resize_corner}
 
@@ -78,6 +80,16 @@ ctrl + alt + !button{1-3}
 
 ctrl + alt + @button{1-3}
     bspc pointer -u
+
+# Rotate windows across desktops
+alt + ctrl + {shift + Tab,Tab}
+    bspc control --record-history off; \
+    bspc window {older,newer} -f; \
+    bspc control --record-history on
+
+# Rotate windows
+alt + {shift + Tab,Tab}
+    bspc window -f {prev,next}
 
 #
 # wm independent hotkeys
