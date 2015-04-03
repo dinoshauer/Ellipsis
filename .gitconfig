@@ -1,3 +1,6 @@
+[core]
+    editor = nano
+
 [user]
     name = Kasper Jacobsen
     email = k@mackwerk.dk
@@ -72,7 +75,6 @@
     
     # exclude files locally
     exclude = !sh -c 'echo "$1" >> .git/info/exclude' -
-
 
 # URL shorthands
 [url "git@github.com:"]
