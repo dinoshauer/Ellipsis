@@ -97,6 +97,13 @@ XF86AudioMute
     amixer set Master toggle
 
 #
+# Screen brightness!
+#
+
+XF86MonBrightness{Up,Down}
+    light -{A,U} 5
+
+#
 # Desktoppy stuff
 #
 

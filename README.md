@@ -8,7 +8,7 @@ Todo:
 * [ ] Get battery status in lemonbar
 * [ ] Keyboard
     * [ ] Keyboard brightness keys
-    * [ ] Screen brightness keys
+    * [x] Screen brightness keys
     * [x] Make volume keys work globally
     * [ ] Make play/pause keys work globally
     * [ ] Make prev/next keys work globally
