@@ -16,8 +16,13 @@ super + w
 super + t
     bspc desktop -l next
 
+# Balance windows
 super + b
     bspc desktop -B
+
+# Unbalance windows
+super + shift + b
+    bspc desktop -E
 
 super + {s,f}
     bspc window -t {floating,fullscreen}
