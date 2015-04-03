@@ -1,6 +1,7 @@
 #!/bin/bash
 
+hsetroot -fill /home/k/git/ellipsis/wallpapers/iso-squares-03.jpg &disp
 sxhkd -c /home/k/.config/sxhkd/sxhkdrc &
-konsole &
+compton --config git/ellipsis/.config/compton/.compton.conf &
 
-bspwm
+exec bspwm
