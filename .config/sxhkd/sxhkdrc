@@ -10,11 +10,13 @@ super + alt + Escape
     && pkill panel \
     && bspc quit
 
+# Close a window
 super + w
-    bspc window -c
+    bspc window --close
 
+# Cycle tiled/monocle
 super + t
-    bspc desktop -l next
+    bspc desktop --layout next
 
 # Balance windows
 super + b
@@ -24,35 +26,30 @@ super + b
 super + shift + b
     bspc desktop -E
 
+# Toggle window type
 super + {s,f}
-    bspc window -t {floating,fullscreen}
-
-super + {grave,Tab}
-    bspc {window,desktop} -f last
-
-super + apostrophe
-    bspc window -s last
+    bspc window --togle {sticky,fullscreen}
 
 super + y
-    bspc window -w last.manual
+    bspc window --to-window last.auto
 
-super + m
+{super, ctrl + alt} + m
     bspc window -s biggest
 
 super + {_,shift + }{h,j,k,l}
     bspc window -{f,s} {left,down,up,right}
 
-super + {_,shift + }c
-    bspc window -f {next,prev}
-
+# Circulate? How about `--shift-stuff-around`?
 super + {comma,period}
-    bspc desktop -C {backward,forward}
+    bspc desktop --circulate {backward,forward}
 
-super + bracket{left,right}
-    bspc desktop -f {prev,next}
+# Rotate the desktop (tableflip)
+super + shift + {comma,period}
+    bspc desktop --rotate {90,270}
 
-super + ctrl + {h,j,k,l}
-    bspc window -p {left,down,up,right}
+# Preselect window ASWD
+ctrl + alt + {a,s,w,d,Escape}
+    bspc window --presel {left,down,up,right,cancel}
 
 super + ctrl + {_,shift + }space
     bspc {window -p cancel,desktop -c}
@@ -69,8 +66,8 @@ super + ctrl + {1-9}
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,window -d} ^{1-9,10}
 
-# Focus a window by clicking it with the left mouse button, genius...
-~button1
+# Focus a window by clicking it with the left or right mouse button, genius...
+~{button1,button2}
     bspc pointer -g focus
 
 # Resize windows
@@ -172,3 +169,8 @@ ctrl + shift + space
 # make sxhkd reload its configuration files:
 super + Escape
     pkill -USR1 -x sxhkd
+
+# Increase/Decrease window gap
+ctrl + {comma,period}
+    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {-,+} 2 ))
+
