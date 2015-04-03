@@ -7,7 +7,7 @@ Todo:
 
 * [ ] Get battery status in lemonbar
 * [ ] Keyboard
-    * [ ] Keyboard brightness keys
+    * [x] Keyboard brightness keys
     * [x] Screen brightness keys
     * [x] Make volume keys work globally
     * [ ] Make play/pause keys work globally
@@ -17,3 +17,4 @@ Todo:
 
 
 * `xwinfo-git` - Instead of xtitle
+* `bin/asus-kbd-backlight` - modified version of the one in AUR

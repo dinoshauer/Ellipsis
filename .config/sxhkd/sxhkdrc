@@ -104,6 +104,14 @@ XF86MonBrightness{Up,Down}
     light -{A,U} 5
 
 #
+# Keyboard brightness
+#
+
+XF86KbdBrightness{Up,Down}
+    asus-kbd-backlight {up,down}
+
+
+#
 # Desktoppy stuff
 #
 
