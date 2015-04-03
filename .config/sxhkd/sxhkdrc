@@ -84,6 +84,19 @@ ctrl + alt + @button{1-3}
     bspc pointer -u
 
 #
+# Volume Keys
+#
+
+XF86AudioRaiseVolume
+    amixer set Master 1%+
+
+XF86AudioLowerVolume
+    amixer set Master 1%-
+
+XF86AudioMute
+    amixer set Master toggle
+
+#
 # Desktoppy stuff
 #
 
