@@ -47,7 +47,7 @@ super + {comma,period}
 super + shift + {comma,period}
     bspc desktop --rotate {90,270}
 
-# Preselect window ASWD
+# Preselect window ASWD/Escape to cancel
 ctrl + alt + {a,s,w,d,Escape}
     bspc window --presel {left,down,up,right,cancel}
 
