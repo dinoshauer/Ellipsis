@@ -18,6 +18,6 @@ clock -sf 'C%a %Y-%m-%d %H:%M:%S' > "$PANEL_FIFO" &
 
 . panel_colors
 
-cat "$PANEL_FIFO" | panel_bar | lemonbar -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+cat "$PANEL_FIFO" | panel_bar | lemonbar -g 1900x$PANEL_HEIGHT+10 -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
 
 wait
