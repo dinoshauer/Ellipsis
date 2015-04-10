@@ -26,7 +26,18 @@ bspc rule -a HipChat desktop=^1 split_dir=left split_ratio=0.60
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
 
-bspc monitor -d misc web dev 1 2 3 4
+laptop_monitor='eDP-0'
+monitors=`bspc query -M | wc -l`
+
+if [ $monitors -eq 2 ]
+then
+    other=`bspc query -M | grep -v $laptop_monitor`
+
+    bspc monitor $laptop_monitor -n "laptop" -d misc
+    bspc monitor $other -n "external" -d web dev 1 2 3 4
+else
+    bspc monitor -d misc web dev 1 2 3 4
+fi
 
 setxkbmap dk
 
