@@ -39,6 +39,4 @@ else
     bspc monitor -d misc web dev 1 2 3 4
 fi
 
-setxkbmap dk
-
 source /home/k/.profile && panel &
