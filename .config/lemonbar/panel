@@ -1,4 +1,6 @@
-#! /bin/sh
+#!/bin/sh
+
+source ~/.config/lemonbar/panel.cfg
 
 if [ $(pgrep -cx panel) -gt 1 ] ; then
     printf "%s\n" "The panel is already running." >&2
@@ -12,12 +14,130 @@ mkfifo "$PANEL_FIFO"
 
 bspc config top_padding $PANEL_HEIGHT
 bspc control --subscribe > "$PANEL_FIFO" &
-xprop -spy -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/A\1/p' > "$PANEL_FIFO" &
-# xtitle -sf 'T%s' > "$PANEL_FIFO" &
-clock -sf 'C%a %Y-%m-%d %H:%M:%S' > "$PANEL_FIFO" &
+xtitle -t 20 -sf 'T%s' > "$PANEL_FIFO" &
 
-. panel_colors
+get_bat () {
+  capacity=`cat /sys/class/power_supply/BAT0/capacity`
+  status=`cat /sys/class/power_supply/BAT0/status`
 
-cat "$PANEL_FIFO" | panel_bar | lemonbar -g 1900x$PANEL_HEIGHT+10 -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+  if [[ $capacity -le 90 && $capacity -ge 51 ]]; then
+    color=$WHITE
+    icon=$BATTERY_DISCHARGED_ICON
+  elif [[ $capacity -le 50 && $capacity -ge 31 ]]; then
+    color=$YELLOW
+    icon=$BATTERY_HALF_ICON
+  elif [[ $capacity -le 30 && $capacity -ge 11 ]]; then
+    color=$RED
+    icon=$BATTERY_HALF_ICON
+  elif [ $capacity -lt 10 ]; then
+    color=$RED
+    icon=$BATTERY_NONE_ICON
+  else
+    color=$WHITE
+    icon=$BATTERY_FULL_ICON
+  fi
+
+  if [ "$status" = "Charging" ]; then
+    color=$GREEN
+    icon=$BATTERY_CHARGING_ICON
+  elif [ "$status" = "Full" ]; then
+    color=$GREEN
+  fi
+
+  printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}${icon} %{B-}" "%{F#FF${BOLD_WHITE}}${capacity}%%"
+}
+
+wifi () {
+  signal=$(iw dev $WIFI_DEV link | grep signal | egrep -o '[0-9]+')
+
+  if [ $signal ]; then
+      sid=$(essid -w $WIFI_DEV)
+      if [ $signal -lt 68 ]; then
+        color=$WIFI_GOOD
+      elif [ $signal -lt 70 ]; then
+        color=$WIFI_FAIR
+      else
+        color=$WIFI_POOR
+      fi
+  else
+    sid="N/A"
+    color=$WIFI_NA
+  fi
+
+  printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F${color}}$WIFI_ICON %{B-}" "%{F#FF${BOLD_WHITE}}${sid}"
+}
+
+volume () {
+  dev=Master
+
+  if ! amixer get $dev | egrep Left &>/dev/null; then
+    vol=$(amixer get $dev | egrep -o "[0-9]+%")
+  else
+    l=$(amixer get $dev | grep Left | egrep -o "[0-9]+%" | sed s/\%//)
+    r=$(amixer get $dev | grep Right | egrep -o "[0-9]+%" | sed s/\%//)
+    vol=$(($(($l + $r)) / 2))
+  fi
+
+  vol="${vol//%}"
+
+  icon=$VOLUME_FULL_ICON
+  color=$WHITE
+
+  if [[ $vol -lt 40 && $vol -gt 1 ]]; then
+    icon="$VOLUME_MED_ICON"
+  elif [ $vol -eq 0 ]; then
+    icon="$VOLUME_LOW_ICON"
+  fi
+
+  if amixer get $dev | egrep "off" &>/dev/null; then
+    icon=$VOLUME_MUTE_ICON
+    color=$BOLD_RED
+  fi
+
+  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:amixer set Master toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}$vol%"
+}
+
+get_time () {
+  the_time=$(date +"%H:%M:%S")
+
+  printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${WHITE}}$DATE_ICON %{B-}" "%{F#FF${BOLD_WHITE}}$the_time"
+}
+
+check_updates () {
+  updates=$(checkupdates | wc -l)
+
+  if [[ -n "$updates" && $updates -gt 0 ]]; then
+    printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${YELLOW}}$UPDATE_ICON %{B-}" "%{F#FF${YELLOW}}$updates%{F-}"
+  fi
+}
+
+# Loop to check time, battery and volume statuses
+while true; do
+    # SCROT="%{B#FF${BOLD_BLACK}} %{A:scrot ~/.scrot.png && xclip ~/.scrot.png && rm ~/.scrot.png:}$SCROT_ICON%{A} %{B-}"
+
+    VOL="$(volume)"
+    WIFI="$(wifi)"
+    BAT="$(get_bat)"
+    DATE="$(get_time)"
+    echo "S${UPDATES} ${WIFI} ${VOL}% ${BAT} ${DATE}" > "$PANEL_FIFO" &
+    sleep 5s
+done &
+
+while true; do
+  UPDATES="$(check_updates)"
+  echo "Z${UPDATES}" > "$PANEL_FIFO" &
+  sleep 4000s
+done &
+
+cat "$PANEL_FIFO" | \
+~/.config/lemonbar/panel_bar | \
+lemonbar \
+  -g ${BARWIDTH}x${BARHEIGHT}+${EDGEWIDTH} \
+  -f "-*-terminus-medium-*-*-*-17-*-*-*-*-*-*-*" \
+  -f "-*-icons-*-*-*-*-22-*-*-*-*-*-*-*" \
+  -F "$FOREGROUND" \
+  -B "$BACKGROUND" \
+  -u "$UNDERLINE_WIDTH" | \
+bash &
 
 wait
