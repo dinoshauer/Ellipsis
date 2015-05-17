@@ -2,6 +2,9 @@
 # bspwm hotkeys
 #
 
+shift + @Pause
+    scrot -s -e 'mv $f ~/$f'
+
 # Kill bspwm softly
 super + alt + Escape
     for window_id in $(bspc query -W); do \
@@ -27,15 +30,18 @@ super + shift + b
     bspc desktop -E
 
 # Toggle window type
-super + {s,f}
-    bspc window --togle {sticky,fullscreen}
+super + {s,f, shift + f}
+    bspc window --toggle {sticky,fullscreen,floating}
 
+# Move window to last focused space(?)
 super + y
     bspc window --to-window last.auto
 
+# Move focused window to biggest space
 {super, ctrl + alt} + m
     bspc window -s biggest
 
+# Move windows between windows
 super + {_,shift + }{h,j,k,l}
     bspc window -{f,s} {left,down,up,right}
 
@@ -54,9 +60,11 @@ ctrl + alt + {a,s,w,d,Escape}
 super + ctrl + {_,shift + }space
     bspc {window -p cancel,desktop -c}
 
+# Resize window
 super + alt + {h,j,k,l}
     bspc window -e {left -10,down +10,up -10,right +10}
 
+# Resize window
 super + alt + shift + {h,j,k,l}
     bspc window -e {right -10,up +10,down -10,left +10}
 
@@ -161,7 +169,7 @@ alt + {shift + Tab,Tab}
 #
 
 ctrl + alt + t
-    konsole
+    termite --exec=tmux
 
 ctrl + shift + space
     dmenu_recent
