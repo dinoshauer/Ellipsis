@@ -23,7 +23,6 @@ Todo:
   open on the right side of the screen
 
 
-* `xwinfo-git` - Instead of xtitle
 * `bin/asus-kbd-backlight` - modified version of the one in AUR
 
 
