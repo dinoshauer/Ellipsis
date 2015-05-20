@@ -1,3 +1,5 @@
+https://github.com/h8h/bspwm-dotfiles/blob/master/.config/bspwm/panel/panel
+
 Ellipsis Arch
 =============
 
@@ -5,9 +7,14 @@ Dot files for Arch + bspwm setup
 
 Todo:
 
-* [ ] Get battery status in lemonbar
+* [ ] Panel
+    * [x] battery
+    * [x] wifi
+    * [x] volume
+    * [x] clock
+    * [x] software updates
 * [ ] Keyboard
-    * [x] Keyboard brightness keys
+    * [ ] Keyboard brightness keys
     * [x] Screen brightness keys
     * [x] Make volume keys work globally
     * [ ] Make play/pause keys work globally
@@ -18,3 +25,12 @@ Todo:
 
 * `xwinfo-git` - Instead of xtitle
 * `bin/asus-kbd-backlight` - modified version of the one in AUR
+
+
+Bar-Aint-Recursive/Lemonbar from https://github.com/thegnome/dotfiles
+
+Requirements:
+
+    * Fonts:
+        * [`icons.ttf`](https://aur.archlinux.org/packages/ttf-font-icons/)
+        * [`terminus-font`](https://www.archlinux.org/packages/community/any/terminus-font/)
