@@ -228,3 +228,8 @@ timeout=1
 appname=scrot
 format="%s\n%b"
 timeout=1
+
+[batterystatus]
+appname=BatteryStatus
+format="%b"
+timeout=1

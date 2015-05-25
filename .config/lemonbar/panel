@@ -44,7 +44,7 @@ get_bat () {
     color=$GREEN
   fi
 
-  printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}${icon} %{B-}" "%{F#FF${BOLD_WHITE}}${capacity}%%"
+  printf "%s %s\n" "%{A:battery-status:}%{B#FF${BOLD_BLACK}} %{F#FF${color}}${icon} %{B-}%{A}" "%{A:battery-status:}%{F#FF${BOLD_WHITE}}${capacity}%%%{A}"
 }
 
 wifi () {
@@ -107,7 +107,7 @@ check_updates () {
   updates=$(checkupdates | wc -l)
 
   if [[ -n "$updates" && $updates -gt 0 ]]; then
-    printf "%s %s\n" "%{A:termite -e \"pacaur -Syu\":}%{B#FF${BOLD_BLACK}} %{F#FF${YELLOW}}$UPDATE_ICON %{B-}" "%{F#FF${YELLOW}}$updates%{F-}%{A}"
+    printf "%s %s\n" "%{A:termite -e \"pacaur -Syu && echo 'Z' > ${PANEL_FIFO} && sleep 10\":}%{B#FF${BOLD_BLACK}} %{F#FF${YELLOW}}$UPDATE_ICON %{B-}" "%{F#FF${YELLOW}}$updates%{F-}%{A}"
   fi
 }
 
