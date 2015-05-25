@@ -195,7 +195,6 @@ background="#900000"
 foreground="#ffffff"
 timeout=30
 
-
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
 # Messages can be matched by "appname", "summary", "body", "icon", "category",
@@ -224,38 +223,3 @@ timeout=1
 appname=ScreenBrightness
 format="%b %p"
 timeout=1
-
-#[espeak]
-#    summary="*"
-#    script=dunst_espeak.sh
-
-#[script-test]
-#    summary="*script*"
-#    script=dunst_test.sh
-
-#[ignore]
-#    # This notification will not be displayed
-#    summary="foobar"
-#    format=""
-
-#[signed_on]
-#    appname=Pidgin
-#    summary="*signed on*"
-#    urgency=low
-#
-#[signed_off]
-#    appname=Pidgin
-#    summary=*signed off*
-#    urgency=low
-#
-#[says]
-#    appname=Pidgin
-#    summary=*says*
-#    urgency=critical
-#
-#[twitter]
-#    appname=Pidgin
-#    summary=*twitter.com*
-#    urgency=normal
-#
-# vim: ft=cfg
