@@ -5,7 +5,7 @@ SB="#336699"
 SF="#ccc"
 NB="#111"
 NF="#ccc"
-FN="-*-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-*"
+FN="-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*"
 OPTIONS="-fn $FN -nb $NB -nf $NF -sb $SB -sf $SF -i"
 
 DMENU="dmenu -b -i $OPTIONS"
