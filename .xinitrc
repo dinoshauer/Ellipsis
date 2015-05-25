@@ -15,6 +15,6 @@ xsetroot -cursor_name left_ptr &
 feh --bg-scale /home/k/git/ellipsis/wallpapers/iso-squares-03.jpg &
 sxhkd -f 100 -c /home/k/.config/sxhkd/sxhkdrc &
 dunst -config /home/k/.config/dunst/dunstrc &
-compton --config git/ellipsis/.config/compton/.compton.conf &
+compton --config /home/k/.config/compton/.compton.conf &
 
 exec bspwm
