@@ -132,8 +132,8 @@ cat "$PANEL_FIFO" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
   -g ${BARWIDTH}x${BARHEIGHT}+${EDGEWIDTH} \
-  -f "-*-terminus-medium-*-*-*-17-*-*-*-*-*-*-*" \
-  -f "-*-icons-*-*-*-*-22-*-*-*-*-*-*-*" \
+  -f "${FONT_TEXT}" \
+  -f "${FONT_ICON}" \
   -F "$FOREGROUND" \
   -B "$BACKGROUND" \
   -u "$UNDERLINE_WIDTH" | \
