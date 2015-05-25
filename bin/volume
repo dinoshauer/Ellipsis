@@ -1,33 +1,53 @@
 #!/bin/bash
 
-# amixer set Master 5%+ unmute
-# amixer set Master 5%- unmute
-# amixer set Master toggle
-
-# VOL=$(amixer get Master | egrep -o "[0-9]+%")
-
-# dunstify -a "Volume" -u NORMAL -h "int:value:88" "asd" ""
-
-# ICONS
-VOLUME_FULL_ICON=""
-VOLUME_MED_ICON=""
-VOLUME_LOW_ICON=""
-VOLUME_MUTE_ICON=""
+source /home/k/.config/lemonbar/panel.cfg
 
 ACTION=$1
+
+volume () {
+  dev=Master
+
+  if ! amixer get $dev | egrep Left &>/dev/null; then
+    vol=$(amixer get $dev | egrep -o "[0-9]+%")
+  else
+    l=$(amixer get $dev | grep Left | egrep -o "[0-9]+%" | sed s/\%//)
+    r=$(amixer get $dev | grep Right | egrep -o "[0-9]+%" | sed s/\%//)
+    vol=$(($(($l + $r)) / 2))
+  fi
+
+  vol="${vol//%}"
+
+  icon=$VOLUME_FULL_ICON
+  color=$WHITE
+
+  if [[ $vol -lt 40 && $vol -gt 1 ]]; then
+    icon="$VOLUME_MED_ICON"
+  elif [ $vol -eq 0 ]; then
+    icon="$VOLUME_LOW_ICON"
+  fi
+
+  if amixer get $dev | egrep "off" &>/dev/null; then
+    icon=$VOLUME_MUTE_ICON
+    color=$BOLD_RED
+  fi
+
+  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:amixer set Master toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}$vol%"
+}
 
 get_volume () {
   printf "%s" "$(amixer get Master | egrep -o "[0-9]+%")"
 }
 
 if [ "$ACTION" == "toggle" ]; then
-    if amixer set Master toggle | grep "off" &> /dev/null; then
+    if amixer set Master toggle | grep "off" >> /dev/null; then
         dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_MUTE_ICON}"
+        echo "Muted audio"
     else
         dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_FULL_ICON}"
+        echo "Unmuted audio"
     fi
 else
-    amixer set Master $ACTION unmute >> /dev/null
+    amixer set Master $ACTION unmute
 
     vol=$(get_volume)
     vol="${vol//%}"
@@ -42,3 +62,5 @@ else
 
     dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "asd" "${icon}"
 fi
+
+echo "V$(volume)%" > /tmp/bspwm-bar
