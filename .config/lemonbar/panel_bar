@@ -23,6 +23,14 @@ get_desktop_layout () {
 
 while read -r line ; do
     case $line in
+        w*)
+            # WiFi output
+            wifi="${line#?}"
+            ;;
+        V*)
+            # Volume output
+            vol="${line#?}"
+            ;;
         S*)
             # clock output
             right="${line#?}"
@@ -90,5 +98,5 @@ while read -r line ; do
             done
             ;;
     esac
-    printf "%s\n" "%{l}${wm_infos} %{c}${title}  %{r}${long_sleep} ${right}"
+    printf "%s\n" "%{l}${wm_infos} %{c}${title}  %{r}${long_sleep} ${wifi} ${vol} ${right}"
 done
