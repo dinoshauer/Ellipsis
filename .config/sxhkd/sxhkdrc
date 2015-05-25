@@ -2,8 +2,11 @@
 # bspwm hotkeys
 #
 
-shift + @Pause
-    scrot -s -e 'mv $f ~/$f'
+shift + @Print
+    screenshot -s -e 'mv $f ~/scrots/$f'
+
+@Print
+    screenshot -e 'mv $f ~/scrots/$f'
 
 # Kill bspwm softly
 super + alt + Escape

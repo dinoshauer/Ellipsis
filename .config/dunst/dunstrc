@@ -223,3 +223,8 @@ timeout=1
 appname=ScreenBrightness
 format="%b %p"
 timeout=1
+
+[scrot]
+appname=scrot
+format="%s\n%b"
+timeout=1

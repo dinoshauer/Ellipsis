@@ -125,7 +125,7 @@ while true; do
   sleep 1m
   UPDATES="$(check_updates)"
   echo "Z${UPDATES}" > "$PANEL_FIFO" &
-  sleep 6h
+  break
 done &
 
 cat "$PANEL_FIFO" | \

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+scrot "$@" && \
+dunstify -a "scrot" -u NORMAL "" "saved to ~/scrots"
