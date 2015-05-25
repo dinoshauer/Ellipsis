@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# amixer set Master 5%+ unmute
+# amixer set Master 5%- unmute
+# amixer set Master toggle
+
+# VOL=$(amixer get Master | egrep -o "[0-9]+%")
+
+# dunstify -a "Volume" -u NORMAL -h "int:value:88" "asd" ""
+
+# ICONS
+VOLUME_FULL_ICON=""
+VOLUME_MED_ICON=""
+VOLUME_LOW_ICON=""
+VOLUME_MUTE_ICON=""
+
+ACTION=$1
+
+get_volume () {
+  printf "%s" "$(amixer get Master | egrep -o "[0-9]+%")"
+}
+
+if [ "$ACTION" == "toggle" ]; then
+    if amixer set Master toggle | grep "off" &> /dev/null; then
+        dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_MUTE_ICON}"
+    else
+        dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_FULL_ICON}"
+    fi
+else
+    amixer set Master $ACTION unmute >> /dev/null
+
+    vol=$(get_volume)
+    vol="${vol//%}"
+
+    icon=$VOLUME_FULL_ICON
+
+    if [[ $vol -lt 40 && $vol -gt 1 ]]; then
+      icon="$VOLUME_MED_ICON"
+    elif [ $vol -eq 0 ]; then
+      icon="$VOLUME_LOW_ICON"
+    fi
+
+    dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "asd" "${icon}"
+fi
