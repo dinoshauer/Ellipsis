@@ -1,15 +1,18 @@
 #!/bin/sh
 # end a command with ; to run in a terminal
 
-SB="#336699"
-SF="#ccc"
-NB="#111"
-NF="#ccc"
-FN="-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*"
-OPTIONS="-fn $FN -nb $NB -nf $NF -sb $SB -sf $SF -i"
+NORMAL_BACKGROUND="#282A2E"
+NORMAL_FOREGROUND="#707880"
 
-DMENU="dmenu -b -i $OPTIONS"
-TERMI="st -e"
+SELECTED_BACKGROUND="#373B41"
+SELECTED_FOREGROUND="#C5C8C6"
+
+FONT="-*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*"
+
+OPTIONS="-fn $FONT -nb $NORMAL_BACKGROUND -nf $NORMAL_FOREGROUND -sb $SELECTED_BACKGROUND -sf $SELECTED_FOREGROUND -i"
+
+DMENU="dmenu -p >> -b -i $OPTIONS"
+TERMI="termite -e"
 CACHE="$HOME/.dmenu_cache_recent"
 
 touch $CACHE
