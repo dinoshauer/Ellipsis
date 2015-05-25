@@ -117,7 +117,7 @@ XF86AudioMute
 #
 
 XF86MonBrightness{Up,Down}
-    light -{A,U} 5
+    screen-brightness -{A,U} 5
 
 #
 # Keyboard brightness
