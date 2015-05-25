@@ -233,3 +233,8 @@ timeout=1
 appname=BatteryStatus
 format="%b"
 timeout=1
+
+[timenotification]
+appname=TimeNotification
+format="%b"
+timeout=1

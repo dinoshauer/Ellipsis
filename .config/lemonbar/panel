@@ -100,7 +100,7 @@ volume () {
 get_time () {
   the_time=$(date +"%H:%M:%S")
 
-  printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${WHITE}}$DATE_ICON %{B-}" "%{F#FF${BOLD_WHITE}}$the_time"
+  printf "%s %s\n" "%{A:time-notification:}%{B#FF${BOLD_BLACK}} %{F#FF${WHITE}}$DATE_ICON %{B-}%{A}" "%{A:time-notification:}%{F#FF${BOLD_WHITE}}$the_time%{A}"
 }
 
 check_updates () {
