@@ -6,11 +6,11 @@ NORMAL_FOREGROUND="#707880"
 SELECTED_BACKGROUND="#373B41"
 SELECTED_FOREGROUND="#C5C8C6"
 
-FONT="-*-terminus-bold-*-*-*-17-*-*-*-*-*-*-*"
+FONT="oxygenmono-17"
 
 OPTIONS="-fn $FONT -nb $NORMAL_BACKGROUND -nf $NORMAL_FOREGROUND -sb $SELECTED_BACKGROUND -sf $SELECTED_FOREGROUND -i"
 
-DMENU="dmenu -l 12 -o 0.7 -w 85 -x 1625 -y 35 $OPTIONS"
+DMENU="dmenu -l 12 -o 0.7 -w 115 -x 1547 -y 35 $OPTIONS"
 
 RANGE="100%\n90%\n80%\n70%\n60%\n50%\n40%\n30%\n20%\n10%\n0%\ntoggle"
 NEW_VOL=$(echo -e "${RANGE}" | $DMENU)
