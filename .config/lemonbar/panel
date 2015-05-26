@@ -15,6 +15,7 @@ mkfifo "$PANEL_FIFO"
 bspc config top_padding $BARHEIGHT
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -t 20 -sf 'T%s' > "$PANEL_FIFO" &
+clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO" &
 
 get_bat () {
   capacity=`cat /sys/class/power_supply/BAT0/capacity`
@@ -117,8 +118,8 @@ echo "V$(volume)%" > "$PANEL_FIFO" &
 while true; do
     # SCROT="%{B#FF${BOLD_BLACK}} %{A:scrot ~/.scrot.png && xclip ~/.scrot.png && rm ~/.scrot.png:}$SCROT_ICON%{A} %{B-}"
     echo "w$(wifi)" > "$PANEL_FIFO" &
-    echo "S$(get_bat) $(get_time)" > "$PANEL_FIFO" &
-    sleep 5s
+    echo "B$(get_bat)" > "$PANEL_FIFO" &
+    sleep 60s
 done &
 
 while true; do
