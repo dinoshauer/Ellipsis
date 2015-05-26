@@ -45,7 +45,7 @@ get_bat () {
     color=$GREEN
   fi
 
-  printf "%s %s\n" "%{A:battery-status:}%{B#FF${BOLD_BLACK}} %{F#FF${color}}${icon} %{B-}%{A}" "%{A:battery-status:}%{F#FF${BOLD_WHITE}}${capacity}%%%{A}"
+  printf "%s %s\n" "%{A:battery-status:}%{B#FF${BOLD_BLACK}} %{F#FF${color}}${icon} %{B-}%{A}" "%{A:battery-status:}%{F#FF${BOLD_WHITE}}${capacity}%%{A}"
 }
 
 wifi () {
@@ -95,7 +95,7 @@ volume () {
     color=$BOLD_RED
   fi
 
-  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:volume toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}%{A:dmenu_volume:}$vol%%%{A}"
+  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:volume toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}%{A:dmenu_volume:}$vol%{A}"
 }
 
 get_time () {
@@ -132,9 +132,8 @@ done &
 cat "$PANEL_FIFO" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
+  -f "${FONT_TEXT}","${FONT_ICON}" \
   -g ${BARWIDTH}x${BARHEIGHT}+${EDGEWIDTH} \
-  -f "${FONT_TEXT}" \
-  -f "${FONT_ICON}" \
   -F "$FOREGROUND" \
   -B "$BACKGROUND" \
   -u "$UNDERLINE_WIDTH" | \

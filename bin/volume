@@ -31,7 +31,7 @@ volume () {
     color=$BOLD_RED
   fi
 
-  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:volume toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}%{A:dmenu_volume:}$vol%%%{A}"
+  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:volume toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}%{A:dmenu_volume:}$vol%{A}"
 }
 
 get_volume () {
