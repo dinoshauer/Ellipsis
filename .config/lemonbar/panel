@@ -24,13 +24,16 @@ get_bat () {
   if [[ $capacity -le 90 && $capacity -ge 51 ]]; then
     color=$WHITE
     icon=$BATTERY_DISCHARGED_ICON
+  elif [[ $capacity -le 55 && $capacity -ge 51 ]]; then
+    color=$WHITE
+    icon=$BATTERY_HALF_ICON
   elif [[ $capacity -le 50 && $capacity -ge 31 ]]; then
     color=$YELLOW
     icon=$BATTERY_HALF_ICON
   elif [[ $capacity -le 30 && $capacity -ge 11 ]]; then
     color=$RED
     icon=$BATTERY_HALF_ICON
-  elif [ $capacity -lt 10 ]; then
+  elif [ $capacity -le 10 ]; then
     color=$RED
     icon=$BATTERY_NONE_ICON
   else
