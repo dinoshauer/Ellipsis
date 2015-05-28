@@ -1,0 +1,27 @@
+#!/bin/bash
+
+NORMAL_BACKGROUND="#282A2E"
+NORMAL_FOREGROUND="#707880"
+
+SELECTED_BACKGROUND="#373B41"
+SELECTED_FOREGROUND="#C5C8C6"
+
+FONT="oxygenmono-17"
+
+OPTIONS="-fn $FONT -nb $NORMAL_BACKGROUND -nf $NORMAL_FOREGROUND -sb $SELECTED_BACKGROUND -sf $SELECTED_FOREGROUND -i"
+DMENU="dmenu -l 12 -o 0.7 -w 115 -x 1347 -y 35 $OPTIONS"
+
+player="${1}"
+
+if [ $(pgrep -cx ${player}) -eq 0 ] ; then
+    echo "!${1} is not running" | ${DMENU}
+else
+    COMMANDS="toggle\nnext\nprevious"
+    RUN_CMD=$(echo -e "${COMMANDS}" | ${DMENU})
+
+    if [ "$RUN_CMD" == "toggle" ]; then
+        RUN_CMD="play-pause"
+    fi
+
+    playerctl -p ${player} ${RUN_CMD}
+fi
