@@ -33,4 +33,5 @@ Requirements:
     * Fonts:
         * [`icons.ttf`](https://aur.archlinux.org/packages/ttf-font-icons/)
         * [`terminus-font`](https://www.archlinux.org/packages/community/any/terminus-font/)
+        * [`ttf-fontawesome`](https://aur.archlinux.org/packages/ttf-font-awesome/)
     * [`dmenu2-hg`](https://aur.archlinux.org/packages/dmenu2-hg)
