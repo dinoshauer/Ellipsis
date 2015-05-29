@@ -97,10 +97,10 @@ ctrl + alt + @button{1-3}
 #
 
 XF86Audio{Play,Pause}
-    pkill {-SIGCONT,-SIGSTOP} spotify
+    playerctl play-pause
 
 XF86Audio{Prev,Next}
-    mpc {prev,next}
+    playerctl {previous,next}
 
 #
 # Volume Keys
