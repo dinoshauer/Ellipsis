@@ -22,8 +22,10 @@ then
 
     bspc monitor $laptop_monitor -n "" -d misc
     bspc monitor $other -n "" -d web dev 1 2 3 4
+    source /home/k/.profile && panel_dual &
 else
     bspc monitor -n "" -d misc web dev 1 2 3 4
+    source /home/k/.profile && panel &
 fi
 
-source /home/k/.profile && panel &
+bspc desktop -f web

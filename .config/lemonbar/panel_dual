@@ -1,0 +1,161 @@
+#!/bin/sh
+
+source ~/.config/lemonbar/panel.cfg
+
+if [ $(pgrep -cx panel) -gt 1 ] ; then
+    printf "%s\n" "The panel is already running." >&2
+    exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+[ -e "$PANEL_FIFO_DUAL" ] && rm "$PANEL_FIFO_DUAL"
+mkfifo "$PANEL_FIFO_DUAL"
+
+bspc config top_padding $BARHEIGHT
+bspc control --subscribe > "$PANEL_FIFO" &
+bspc control --subscribe > "$PANEL_FIFO_DUAL" &
+xtitle -t 20 -sf 'T%s' > "$PANEL_FIFO" &
+xtitle -t 20 -sf 'T%s' > "$PANEL_FIFO_DUAL" &
+clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO" &
+clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO_DUAL" &
+
+get_bat () {
+  capacity=`cat /sys/class/power_supply/BAT0/capacity`
+  status=`cat /sys/class/power_supply/BAT0/status`
+
+  if [[ $capacity -le 90 && $capacity -ge 51 ]]; then
+    color=$WHITE
+    icon=$BATTERY_DISCHARGED_ICON
+  elif [[ $capacity -le 50 && $capacity -ge 31 ]]; then
+    color=$YELLOW
+    icon=$BATTERY_HALF_ICON
+  elif [[ $capacity -le 30 && $capacity -ge 11 ]]; then
+    color=$RED
+    icon=$BATTERY_HALF_ICON
+  elif [ $capacity -lt 10 ]; then
+    color=$RED
+    icon=$BATTERY_NONE_ICON
+  else
+    color=$WHITE
+    icon=$BATTERY_FULL_ICON
+  fi
+
+  if [ "$status" = "Charging" ]; then
+    color=$GREEN
+    icon=$BATTERY_CHARGING_ICON
+  elif [ "$status" = "Full" ]; then
+    color=$GREEN
+  fi
+
+  printf "%s %s\n" "%{A:battery-status:}%{B#FF${BOLD_BLACK}} %{F#FF${color}}${icon} %{B-}%{A}" "%{A:battery-status:}%{F#FF${BOLD_WHITE}}${capacity}%%{A}"
+}
+
+wifi () {
+  signal=$(iw dev $WIFI_DEV link | grep signal | egrep -o '[0-9]+')
+
+  if [ $signal ]; then
+      sid=$(essid -w $WIFI_DEV)
+      if [ $signal -lt 68 ]; then
+        color=$WIFI_GOOD
+      elif [ $signal -lt 70 ]; then
+        color=$WIFI_FAIR
+      else
+        color=$WIFI_POOR
+      fi
+  else
+    sid="N/A"
+    color=$WIFI_NA
+  fi
+
+  printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F${color}}$WIFI_ICON %{B-}" "%{F#FF${BOLD_WHITE}}${sid}"
+}
+
+volume () {
+  dev=Master
+
+  if ! amixer get $dev | egrep Left &>/dev/null; then
+    vol=$(amixer get $dev | egrep -o "[0-9]+%")
+  else
+    l=$(amixer get $dev | grep Left | egrep -o "[0-9]+%" | sed s/\%//)
+    r=$(amixer get $dev | grep Right | egrep -o "[0-9]+%" | sed s/\%//)
+    vol=$(($(($l + $r)) / 2))
+  fi
+
+  vol="${vol//%}"
+
+  icon=$VOLUME_FULL_ICON
+  color=$WHITE
+
+  if [[ $vol -lt 40 && $vol -gt 1 ]]; then
+    icon="$VOLUME_MED_ICON"
+  elif [ $vol -eq 0 ]; then
+    icon="$VOLUME_LOW_ICON"
+  fi
+
+  if amixer get $dev | egrep "off" &>/dev/null; then
+    icon=$VOLUME_MUTE_ICON
+    color=$BOLD_RED
+  fi
+
+  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:volume toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}%{A:dmenu_volume:}$vol%{A}"
+}
+
+get_time () {
+  the_time=$(date +"%H:%M:%S")
+
+  printf "%s %s\n" "%{A:time-notification:}%{B#FF${BOLD_BLACK}} %{F#FF${WHITE}}$DATE_ICON %{B-}%{A}" "%{A:time-notification:}%{F#FF${BOLD_WHITE}}$the_time%{A}"
+}
+
+check_updates () {
+  updates=$(checkupdates | wc -l)
+
+  if [[ -n "$updates" && $updates -gt 0 ]]; then
+    printf "%s %s\n" "%{A:termite -e \"update_system\":}%{B#FF${BOLD_BLACK}} %{F#FF${YELLOW}}$UPDATE_ICON %{B-}" "%{F#FF${YELLOW}}$updates%{F-}%{A}"
+  fi
+}
+
+echo "V$(volume)%" > "$PANEL_FIFO" &
+
+# Loop to check time, battery and volume statuses
+while true; do
+    # SCROT="%{B#FF${BOLD_BLACK}} %{A:scrot ~/.scrot.png && xclip ~/.scrot.png && rm ~/.scrot.png:}$SCROT_ICON%{A} %{B-}"
+    echo "w$(wifi)" > "$PANEL_FIFO" &
+    echo "w$(wifi)" > "$PANEL_FIFO_DUAL" &
+    echo "B$(get_bat)" > "$PANEL_FIFO" &
+    echo "B$(get_bat)" > "$PANEL_FIFO_DUAL" &
+    sleep 60s
+done &
+
+while true; do
+  sleep 1m
+  UPDATES="$(check_updates)"
+  echo "Z${UPDATES}" > "$PANEL_FIFO" &
+  echo "Z${UPDATES}" > "$PANEL_FIFO_DUAL" &
+  break
+done &
+
+cat "$PANEL_FIFO" | \
+~/.config/lemonbar/panel_bar | \
+lemonbar \
+  -f "${FONT_TEXT}","${FONT_ICON}" \
+  -g 1920x${BARHEIGHT}+${EDGEWIDTH} \
+  -F "$FOREGROUND" \
+  -B "$BACKGROUND" \
+  -u "$UNDERLINE_WIDTH" | \
+bash &
+
+cat "$PANEL_FIFO_DUAL" | \
+~/.config/lemonbar/panel_bar | \
+lemonbar \
+  -f "${FONT_TEXT}","${FONT_ICON}" \
+  -g 1920x${BARHEIGHT}+1920 \
+  -F "$FOREGROUND" \
+  -B "$BACKGROUND" \
+  -u "$UNDERLINE_WIDTH" | \
+bash &
+
+wait
