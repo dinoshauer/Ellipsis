@@ -45,6 +45,9 @@ while read -r line ; do
         Z*)
             long_sleep="${line#?}"
             ;;
+        M*)
+            music_control="${line#?}"
+            ;;
         W*)
             # bspwm internal state
             wm_infos=""
@@ -101,5 +104,5 @@ while read -r line ; do
             done
             ;;
     esac
-    printf "%s\n" "%{l}${wm_infos} %{c}${title} %{r}${long_sleep} ${wifi} ${vol} ${battery_status} ${the_time}"
+    printf "%s\n" "%{l}${wm_infos} %{c}${title} %{r}${music_control} ${long_sleep} ${wifi} ${vol} ${battery_status} ${the_time}"
 done

@@ -16,6 +16,7 @@ bspc config top_padding $BARHEIGHT
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -t 20 -sf 'T%s' > "$PANEL_FIFO" &
 clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO" &
+echo "M%{A:dmenu_playerctl spotify:}%{A}" > "$PANEL_FIFO" &
 
 get_bat () {
   capacity=`cat /sys/class/power_supply/BAT0/capacity`
