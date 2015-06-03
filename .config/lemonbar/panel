@@ -111,7 +111,7 @@ check_updates () {
   updates=$(checkupdates | wc -l)
 
   if [[ -n "$updates" && $updates -gt 0 ]]; then
-    printf "%s %s\n" "%{A:termite -e \"pacaur -Syu && echo 'Z' > ${PANEL_FIFO} && sleep 10\":}%{B#FF${BOLD_BLACK}} %{F#FF${YELLOW}}$UPDATE_ICON %{B-}" "%{F#FF${YELLOW}}$updates%{F-}%{A}"
+    printf "%s %s\n" "%{A:termite -e \"update_system\":}%{B#FF${BOLD_BLACK}} %{F#FF${YELLOW}}$UPDATE_ICON %{B-}" "%{F#FF${YELLOW}}$updates%{F-}%{A}"
   fi
 }
 
