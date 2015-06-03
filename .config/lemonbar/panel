@@ -135,7 +135,9 @@ done &
 cat "$PANEL_FIFO" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
-  -f "${FONT_TEXT}","${FONT_ICON}" \
+  -f "${FONT_TEXT}" \
+  -f "${FONT_ICON}" \
+  -f "${FONT_ICON_AWESOME}" \
   -g ${BARWIDTH}x${BARHEIGHT}+${EDGEWIDTH} \
   -F "$FOREGROUND" \
   -B "$BACKGROUND" \
