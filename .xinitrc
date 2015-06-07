@@ -12,7 +12,7 @@ fi
 
 setxkbmap dk &
 xsetroot -cursor_name left_ptr &
-feh --bg-scale /home/k/git/ellipsis/wallpapers/iso-squares-03.jpg &
+feh --bg-scale /home/k/git/ellipsis/wallpapers/misty-forest.jpg &
 sxhkd -f 100 -c /home/k/.config/sxhkd/sxhkdrc &
 compton --config /home/k/.config/compton/compton.conf &
 
