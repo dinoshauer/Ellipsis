@@ -141,7 +141,9 @@ done &
 cat "$PANEL_FIFO" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
-  -f "${FONT_TEXT}","${FONT_ICON}" \
+  -f "${FONT_TEXT}" \
+  -f "${FONT_ICON}" \
+  -f "${FONT_ICON_AWESOME}" \
   -g 1920x${BARHEIGHT}+${EDGEWIDTH} \
   -F "$FOREGROUND" \
   -B "$BACKGROUND" \
@@ -151,7 +153,9 @@ bash &
 cat "$PANEL_FIFO_DUAL" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
-  -f "${FONT_TEXT}","${FONT_ICON}" \
+  -f "${FONT_TEXT}" \
+  -f "${FONT_ICON}" \
+  -f "${FONT_ICON_AWESOME}" \
   -g 1920x${BARHEIGHT}+1920 \
   -F "$FOREGROUND" \
   -B "$BACKGROUND" \
