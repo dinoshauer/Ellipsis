@@ -21,10 +21,10 @@ then
     other=`bspc query -M | grep -v $laptop_monitor`
 
     bspc monitor $laptop_monitor -n "" -d misc
-    bspc monitor $other -n "" -d web dev 1 2 3 4
+    bspc monitor $other -n "" -d web dev
     source /home/k/.profile && panel_dual &
 else
-    bspc monitor -n "" -d misc web dev 1 2 3 4
+    bspc monitor -n "" -d misc web dev
     source /home/k/.profile && panel &
 fi
 

@@ -134,13 +134,21 @@ XF86KbdBrightness{Up,Down}
 # Desktoppy stuff
 #
 
-# Change desktop by #id
+# Append new desktop
+ctrl + alt + plus
+    bspc monitor -a $((`bspc query -D | wc -l` + 1 - 3))
 
+# Remove current desktop
+ctrl + alt + Delete
+    CURRENT_DESKTOP=`bspc query -D -d focused` && \
+    bspc desktop -f prev && \
+    bspc monitor -r $CURRENT_DESKTOP
+
+# Change desktop by #id
 ctrl + alt + {1-9,0}
     bspc desktop -f ^{1-9,10}
 
 # Change desktop
-
 ctrl + alt + {Left,Right}
     bspc desktop -f {prev,next}
 
