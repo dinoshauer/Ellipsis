@@ -135,7 +135,7 @@ XF86KbdBrightness{Up,Down}
 #
 
 # Append new desktop
-ctrl + alt + plus
+ctrl + alt + l
     bspc monitor -a $((`bspc query -D | wc -l` + 1 - 3))
 
 # Remove current desktop
