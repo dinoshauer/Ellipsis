@@ -136,7 +136,8 @@ XF86KbdBrightness{Up,Down}
 
 # Append new desktop
 ctrl + alt + l
-    bspc monitor -a $((`bspc query -D | wc -l` + 1 - 3))
+    bspc monitor -a $((`bspc query -D | wc -l` + 1 - 3)) && \
+    bspc desktop -f $((`bspc query -D | wc -l` + 1 - 3))
 
 # Remove current desktop
 ctrl + alt + Delete
@@ -181,6 +182,9 @@ alt + {shift + Tab,Tab}
 
 ctrl + alt + t
     termite --exec=tmux
+
+ctrl + shift + alt + t
+    termite
 
 ctrl + shift + space
     dmenu_recent
