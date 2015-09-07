@@ -102,6 +102,12 @@ XF86Audio{Play,Pause}
 XF86Audio{Prev,Next}
     playerctl {previous,next}
 
+ctrl + super + {up,down}
+    playerctl play-pause
+
+ctrl + super + {left,right}
+    playerctl {previous,next}
+
 #
 # Volume Keys
 #
