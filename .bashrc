@@ -134,12 +134,14 @@ export PYTHONDONTWRITEBYTECODE=true
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # Docker aliases
-alias docker_rmc='docker rm $(docker ps -a -q)'
+alias docker_rmc='docker rm -v $(docker ps -a -q)'
 alias docker_rmi='docker rmi $(docker images -q)'
 
 alias subl='subl3'
 
 alias npm='PYTHON=python2 npm'
+
+alias serve='python3 -m http.server'
 
 # Keychain ssh-agent stuff
 eval $(keychain --agents ssh --eval 2> /dev/null)
