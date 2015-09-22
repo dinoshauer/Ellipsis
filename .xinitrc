@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IN="eDP1"
-EXT="HDMI1"
+EXT="HDMI2"
 
 if (xrandr | grep "$EXT disconnected"); then
     xrandr --output $IN --auto --output $EXT --off
