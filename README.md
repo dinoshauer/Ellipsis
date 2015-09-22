@@ -7,24 +7,18 @@ Dot files for Arch + bspwm setup
 
 Todo:
 
-* [ ] Panel
+* [x] Panel
     * [x] battery
     * [x] wifi
     * [x] volume
     * [x] clock
     * [x] software updates
-* [ ] Keyboard
-    * [ ] Keyboard brightness keys
+* [x] Keyboard
+    * [x] Keyboard brightness keys
     * [x] Screen brightness keys
     * [x] Make volume keys work globally
-    * [ ] Make play/pause keys work globally
-    * [ ] Make prev/next keys work globally
-* [ ] Define window rule for sublime to always
-  open on the right side of the screen
-
-
-* `bin/asus-kbd-backlight` - modified version of the one in AUR
-
+    * [x] Make play/pause keys work globally
+    * [x] Make prev/next keys work globally
 
 Bar-Aint-Recursive/Lemonbar from https://github.com/thegnome/dotfiles
 
@@ -35,3 +29,4 @@ Requirements:
         * [`terminus-font`](https://www.archlinux.org/packages/community/any/terminus-font/)
         * [`ttf-fontawesome`](https://aur.archlinux.org/packages/ttf-font-awesome/)
     * [`dmenu2-hg`](https://aur.archlinux.org/packages/dmenu2-hg)
+    * [`pamixer-git`](https://aur.archlinux.org/packages/pamixer-git/)

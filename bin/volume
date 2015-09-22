@@ -3,18 +3,10 @@
 source /home/k/.config/lemonbar/panel.cfg
 
 ACTION=$1
+AMOUNT=$2
 
 volume () {
-  dev=Master
-
-  if ! amixer get $dev | egrep Left &>/dev/null; then
-    vol=$(amixer get $dev | egrep -o "[0-9]+%")
-  else
-    l=$(amixer get $dev | grep Left | egrep -o "[0-9]+%" | sed s/\%//)
-    r=$(amixer get $dev | grep Right | egrep -o "[0-9]+%" | sed s/\%//)
-    vol=$(($(($l + $r)) / 2))
-  fi
-
+  vol=$(pamixer --get-volume)
   vol="${vol//%}"
 
   icon=$VOLUME_FULL_ICON
@@ -22,7 +14,7 @@ volume () {
 
   if [[ $vol -lt 40 && $vol -gt 1 ]]; then
     icon="$VOLUME_MED_ICON"
-  elif [ $vol -eq 0 ]; then
+  elif [[ $vol -eq 0 ]]; then
     icon="$VOLUME_LOW_ICON"
   fi
 
@@ -35,32 +27,42 @@ volume () {
 }
 
 get_volume () {
-  printf "%s" "$(amixer get Master | egrep -o "[0-9]+%")"
+  printf "%s" "$(pamixer --get-volume)"
 }
 
-if [ "$ACTION" == "toggle" ]; then
-    if amixer set Master toggle | grep "off" >> /dev/null; then
-        dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_MUTE_ICON}"
-        echo "Muted audio"
+if [[ $# -ne 0 ]]; then
+    if [ "$ACTION" == "toggle" ]; then
+        if pamixer --get-mute | grep "false" >> /dev/null; then
+            pamixer --mute
+            dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_MUTE_ICON}"
+            echo "Muted audio"
+        else
+            pamixer --unmute
+            dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_FULL_ICON}"
+            echo "Unmuted audio"
+        fi
     else
-        dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_FULL_ICON}"
-        echo "Unmuted audio"
+        if [ "$ACTION" == "decrease" ]; then
+            pamixer --decrease $AMOUNT
+        else
+            pamixer --increase $AMOUNT
+        fi
+
+        pamixer --unmute
+
+        vol=$(get_volume)
+        vol="${vol//%}"
+
+        icon=$VOLUME_FULL_ICON
+
+        if [[ $vol -lt 40 && $vol -gt 1 ]]; then
+          icon="$VOLUME_MED_ICON"
+        elif [[ $vol -eq 0 ]]; then
+          icon="$VOLUME_LOW_ICON"
+        fi
+
+        dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "asd" "${icon}"
     fi
-else
-    amixer set Master $ACTION unmute
-
-    vol=$(get_volume)
-    vol="${vol//%}"
-
-    icon=$VOLUME_FULL_ICON
-
-    if [[ $vol -lt 40 && $vol -gt 1 ]]; then
-      icon="$VOLUME_MED_ICON"
-    elif [ $vol -eq 0 ]; then
-      icon="$VOLUME_LOW_ICON"
-    fi
-
-    dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "asd" "${icon}"
 fi
 
 echo "V$(volume)%" > /tmp/bspwm-bar

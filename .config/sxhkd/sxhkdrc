@@ -91,7 +91,6 @@ ctrl + alt + !button{1-3}
 ctrl + alt + @button{1-3}
     bspc pointer -u
 
-
 #
 # Play/Pause & prev/next
 #
@@ -102,10 +101,10 @@ XF86Audio{Play,Pause}
 XF86Audio{Prev,Next}
     playerctl {previous,next}
 
-ctrl + super + {up,down}
+ctrl + super + {Up,Down}
     playerctl play-pause
 
-ctrl + super + {left,right}
+ctrl + super + {Left,Right}
     playerctl {previous,next}
 
 #
@@ -113,10 +112,10 @@ ctrl + super + {left,right}
 #
 
 XF86AudioRaiseVolume
-    volume 5%+
+    volume increase 5
 
 XF86AudioLowerVolume
-    volume 5%-
+    volume decrease 5
 
 XF86AudioMute
     volume toggle
@@ -127,14 +126,6 @@ XF86AudioMute
 
 XF86MonBrightness{Up,Down}
     screen-brightness -{A,U} 5
-
-#
-# Keyboard brightness
-#
-
-XF86KbdBrightness{Up,Down}
-    asus-kbd-backlight {up,down}
-
 
 #
 # Desktoppy stuff
