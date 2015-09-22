@@ -1,3 +1,5 @@
+For dotfiles for Lenovo X1 Carbon see: https://github.com/Dinoshauer/Ellipsis/tree/lenovo-carbon-x1-2015
+
 https://github.com/h8h/bspwm-dotfiles/blob/master/.config/bspwm/panel/panel
 
 Ellipsis Arch
