@@ -14,7 +14,7 @@ mkfifo "$PANEL_FIFO"
 
 bspc config top_padding $BARHEIGHT
 bspc control --subscribe > "$PANEL_FIFO" &
-xtitle -t 20 -sf 'T%s' > "$PANEL_FIFO" &
+xtitle -t 40 -sf 'T%s' > "$PANEL_FIFO" &
 clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO" &
 echo "M%{A:dmenu_playerctl spotify:}%{A}" > "$PANEL_FIFO" &
 
@@ -56,7 +56,8 @@ wifi () {
   signal=$(iw dev $WIFI_DEV link | grep signal | egrep -o '[0-9]+')
 
   if [ $signal ]; then
-      sid=$(essid -w $WIFI_DEV)
+      sid=$(iw dev wlp4s0 link | grep SSID)
+      sid="${sid//[[:blank:]]SSID: /}"
       if [ $signal -lt 68 ]; then
         color=$WIFI_GOOD
       elif [ $signal -lt 70 ]; then
@@ -72,42 +73,6 @@ wifi () {
   printf "%s %s\n" "%{B#FF${BOLD_BLACK}} %{F${color}}$WIFI_ICON %{B-}" "%{F#FF${BOLD_WHITE}}${sid}"
 }
 
-volume () {
-  dev=Master
-
-  if ! amixer get $dev | egrep Left &>/dev/null; then
-    vol=$(amixer get $dev | egrep -o "[0-9]+%")
-  else
-    l=$(amixer get $dev | grep Left | egrep -o "[0-9]+%" | sed s/\%//)
-    r=$(amixer get $dev | grep Right | egrep -o "[0-9]+%" | sed s/\%//)
-    vol=$(($(($l + $r)) / 2))
-  fi
-
-  vol="${vol//%}"
-
-  icon=$VOLUME_FULL_ICON
-  color=$WHITE
-
-  if [[ $vol -lt 40 && $vol -gt 1 ]]; then
-    icon="$VOLUME_MED_ICON"
-  elif [ $vol -eq 0 ]; then
-    icon="$VOLUME_LOW_ICON"
-  fi
-
-  if amixer get $dev | egrep "off" &>/dev/null; then
-    icon=$VOLUME_MUTE_ICON
-    color=$BOLD_RED
-  fi
-
-  printf "%s %-5s\n" "%{B#FF${BOLD_BLACK}} %{F#FF${color}}%{A:volume toggle:}${icon} %{A}%{B-}" "%{F#FF${BOLD_WHITE}}%{A:dmenu_volume:}$vol%{A}"
-}
-
-get_time () {
-  the_time=$(date +"%H:%M:%S")
-
-  printf "%s %s\n" "%{A:time-notification:}%{B#FF${BOLD_BLACK}} %{F#FF${WHITE}}$DATE_ICON %{B-}%{A}" "%{A:time-notification:}%{F#FF${BOLD_WHITE}}$the_time%{A}"
-}
-
 check_updates () {
   updates=$(checkupdates | wc -l)
 
@@ -116,7 +81,7 @@ check_updates () {
   fi
 }
 
-echo "V$(volume)%" > "$PANEL_FIFO" &
+echo "$(volume)" > "$PANEL_FIFO" &
 
 # Loop to check time, battery and volume statuses
 while true; do
