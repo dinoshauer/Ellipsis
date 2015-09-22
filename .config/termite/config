@@ -9,7 +9,7 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = false
-font = Oxygen Mono 12
+font = Oxygen Mono 16
 scrollback_lines = 50000
 search_wrap = true
  
