@@ -43,9 +43,9 @@ if [[ $# -ne 0 ]]; then
         fi
     else
         if [ "$ACTION" == "decrease" ]; then
-            pamixer --decrease $AMOUNT
+            pamixer --allow-boost --decrease $AMOUNT
         else
-            pamixer --increase $AMOUNT
+            pamixer --allow-boost --increase $AMOUNT
         fi
 
         pamixer --unmute
