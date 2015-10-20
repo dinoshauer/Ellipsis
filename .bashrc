@@ -143,6 +143,8 @@ alias npm='PYTHON=python2 npm'
 
 alias serve='python3 -m http.server'
 
+alias sssh='ssh -F ~/.ssh/my_config'
+
 # Keychain ssh-agent stuff
 eval $(keychain --agents ssh --eval 2> /dev/null)
 
