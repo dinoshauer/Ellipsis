@@ -18,8 +18,8 @@ mkfifo "$PANEL_FIFO_DUAL"
 bspc config top_padding $BARHEIGHT
 bspc control --subscribe > "$PANEL_FIFO" &
 bspc control --subscribe > "$PANEL_FIFO_DUAL" &
-xtitle -t 40 -sf 'T%s' > "$PANEL_FIFO" &
-xtitle -t 40 -sf 'T%s' > "$PANEL_FIFO_DUAL" &
+xtitle -t 60 -sf 'T%s' > "$PANEL_FIFO" &
+xtitle -t 60 -sf 'T%s' > "$PANEL_FIFO_DUAL" &
 clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO" &
 clock -si 1 -f "C%%{A:time-notification:}%%{B#FF${BOLD_BLACK}} %%{F#FF${WHITE}}$DATE_ICON %%{B-}%%{F#FF${BOLD_WHITE}} %H:%M:%S%%{A}" > "$PANEL_FIFO_DUAL" &
 
@@ -106,6 +106,7 @@ done &
 cat "$PANEL_FIFO" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
+  -a 20 \
   -f "${FONT_TEXT}" \
   -f "${FONT_ICON}" \
   -f "${FONT_ICON_AWESOME}" \
@@ -118,6 +119,7 @@ bash &
 cat "$PANEL_FIFO_DUAL" | \
 ~/.config/lemonbar/panel_bar | \
 lemonbar \
+  -a 20 \
   -f "${FONT_TEXT}" \
   -f "${FONT_ICON}" \
   -f "${FONT_ICON_AWESOME}" \
