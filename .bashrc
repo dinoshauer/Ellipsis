@@ -150,6 +150,3 @@ eval $(keychain --agents ssh --eval 2> /dev/null)
 
 # ls colors in termite
 eval $(dircolors ~/.dircolors)
-
-export GOPATH=~/go
-export PATH=$PATH:~/go/bin
