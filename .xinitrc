@@ -40,6 +40,7 @@ dunst &
 synclient MaxTapTime=0 &
 synclient MaxDoubleTapTime=0 &
 pulseaudio --start --log-target=syslog &
+redshift &
 
 # Set the default sink to laptop speakers if dock is disconnected
 if (xrandr | grep "$EXT disconnected"); then

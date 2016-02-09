@@ -30,3 +30,4 @@ Requirements:
         * [`ttf-fontawesome`](https://aur.archlinux.org/packages/ttf-font-awesome/)
     * [`dmenu2-hg`](https://aur.archlinux.org/packages/dmenu2-hg)
     * [`pamixer-git`](https://aur.archlinux.org/packages/pamixer-git/)
+    * `redshift`
