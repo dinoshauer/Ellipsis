@@ -3,4 +3,4 @@
 ACTION=$1
 
 light $ACTION 5
-dunstify -a "ScreenBrightness" -u NORMAL -h "int:value:$(light -G)" "" ""
+notify-send -a "ScreenBrightness" -u NORMAL -h "int:value:$(light -G)" " " ""

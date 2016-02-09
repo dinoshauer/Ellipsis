@@ -3,5 +3,5 @@
 LOC=$(date +"%Y/%m/%d %H:%M:%S (%Z)")
 UTC=$(date -u +"%Y/%m/%d %H:%M:%S (%Z)")
 
-dunstify -a "TimeNotification" "" " ${LOC}
+notify-send -a "TimeNotification" " " " ${LOC}
  ${UTC}"

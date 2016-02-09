@@ -4,5 +4,5 @@ IFS=$'\n'
 BAT=$(acpi -b | tr ',' '\n' | sed -e 's/^[ \t]*//')
 AC=$(acpi -a)
 
-dunstify -a "BatteryStatus" "" " ${BAT}
+notify-send -a "BatteryStatus" " " " ${BAT}
  ${AC}"

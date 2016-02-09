@@ -34,11 +34,11 @@ if [[ $# -ne 0 ]]; then
     if [ "$ACTION" == "toggle" ]; then
         if pamixer --get-mute | grep "false" >> /dev/null; then
             pamixer --mute
-            dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_MUTE_ICON}"
+            notify-send -a "Volume" -u NORMAL -h "int:value:$(get_volume)" " " "${VOLUME_MUTE_ICON}"
             echo "Muted audio"
         else
             pamixer --unmute
-            dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "" "${VOLUME_FULL_ICON}"
+            notify-send -a "Volume" -u NORMAL -h "int:value:$(get_volume)" " " "${VOLUME_FULL_ICON}"
             echo "Unmuted audio"
         fi
     else
@@ -61,7 +61,7 @@ if [[ $# -ne 0 ]]; then
           icon="$VOLUME_LOW_ICON"
         fi
 
-        dunstify -a "Volume" -u NORMAL -h "int:value:$(get_volume)" "asd" "${icon}"
+        notify-send -a "Volume" -u NORMAL -h "int:value:$(get_volume)" " " "${icon}"
     fi
 fi
 
