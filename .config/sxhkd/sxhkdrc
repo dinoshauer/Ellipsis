@@ -11,14 +11,14 @@ shift + @Print
 # Kill bspwm softly
 super + alt + Escape
     for window_id in $(bspc query -W); do \
-        bspc window $window_id -c; \
+        bspc node $window_id -c; \
     done \
     && pkill panel \
     && bspc quit
 
 # Close a window
 super + w
-    bspc window --close
+    bspc node --close
 
 # Cycle tiled/monocle
 super + t
@@ -34,19 +34,19 @@ super + shift + b
 
 # Toggle window type
 super + {s,f, shift + f}
-    bspc window --toggle {sticky,fullscreen,floating}
+    bspc node --toggle {sticky,fullscreen,floating}
 
 # Move window to last focused space(?)
 super + y
-    bspc window --to-window last.auto
+    bspc node --to-window last.auto
 
 # Move focused window to biggest space
 {super, ctrl + alt} + m
-    bspc window -s biggest
+    bspc node -s biggest
 
 # Move windows between windows
 super + {_,shift + }{h,j,k,l}
-    bspc window -{f,s} {left,down,up,right}
+    bspc node -{f,s} {left,down,up,right}
 
 # Circulate? How about `--shift-stuff-around`?
 super + {comma,period}
@@ -58,21 +58,21 @@ super + shift + {comma,period}
 
 # Preselect window ASWD/Escape to cancel
 ctrl + alt + {a,s,w,d,Escape}
-    bspc window --presel {left,down,up,right,cancel}
+    bspc node --presel {left,down,up,right,cancel}
 
 super + ctrl + {_,shift + }space
     bspc {window -p cancel,desktop -c}
 
 # Resize window
 super + alt + {h,j,k,l}
-    bspc window -e {left -10,down +10,up -10,right +10}
+    bspc node -e {left -10,down +10,up -10,right +10}
 
 # Resize window
 super + alt + shift + {h,j,k,l}
-    bspc window -e {right -10,up +10,down -10,left +10}
+    bspc node -e {right -10,up +10,down -10,left +10}
 
 super + ctrl + {1-9}
-    bspc window -r 0.{1-9}
+    bspc node -r 0.{1-9}
 
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,window -d} ^{1-9,10}
@@ -152,26 +152,26 @@ ctrl + alt + {Left,Right}
 
 # Move window whith desktop
 ctrl + shift + alt + Right
-    bspc window --to-desktop next && \
+    bspc node --to-desktop next && \
     bspc desktop --focus next && \
-    bspc window --focus next
+    bspc node --focus next
 
 ctrl + shift + alt + Left
-    bspc window --to-desktop prev && \
+    bspc node --to-desktop prev && \
     bspc desktop --focus prev && \
-    bspc window --focus next
+    bspc node --focus next
 
 # Rotate windows across desktops
 
 alt + ctrl + {shift + Tab,Tab}
     bspc control --record-history off; \
-    bspc window {older,newer} -f; \
+    bspc node {older,newer} -f; \
     bspc control --record-history on
 
 # Rotate windows
 
 alt + {shift + Tab,Tab}
-    bspc window -f {prev,next}
+    bspc node -f {prev,next}
 
 #
 # wm independent hotkeys
